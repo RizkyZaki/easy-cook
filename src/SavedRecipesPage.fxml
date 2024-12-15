@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="SavedRecipesPage">
+    <Label text="Resep Tersimpan:"/>
+    <ListView fx:id="savedRecipeList" onMouseClicked="#onRecipeSelect"/>
+    <Button text="Hapus Resep" onAction="#deleteSelectedRecipe"/>
+    <Label text="Detail Resep:"/>
+    <TextArea fx:id="recipeDetails"/>
+</VBox>

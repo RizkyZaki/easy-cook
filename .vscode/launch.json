@@ -6,17 +6,17 @@
   "configurations": [
     {
       "type": "java",
-      "name": "Current File",
+      "name": "EasyCook",
       "request": "launch",
-      "mainClass": "${file}"
+      "mainClass": "EasyCook",
+      "projectName": "EasyCook_251aaf90",
+      "vmArgs": "--module-path \"D:/Tech/javafx-sdk-17.0.13/lib\" --add-modules javafx.controls,javafx.fxml"
     },
     {
       "type": "java",
-      "name": "App",
+      "name": "Current File",
       "request": "launch",
-      "mainClass": "App",
-      "projectName": "EasyCook_251aaf90",
-      "vmArgs": "--module-path \"D:/Tech/javafx-sdk-17.0.13/lib\" --add-modules javafx.controls,javafx.fxml"
+      "mainClass": "${file}"
     }
   ]
 }
