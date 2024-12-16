@@ -1,3 +1,5 @@
+import java.io.IOException;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -5,8 +7,6 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.stage.Stage;
 import javafx.scene.layout.VBox;
-
-import java.io.IOException;
 
 public class EasyCook extends Application {
 
@@ -21,29 +21,27 @@ public class EasyCook extends Application {
         // TabPane untuk navigasi
         TabPane tabPane = new TabPane();
 
-        // Tab Beranda (Main Interface)
-        Tab mainTab = new Tab("Beranda");
-        mainTab.setContent(loadFXML("MainInterface.fxml"));
-        mainTab.setClosable(false);  // Mencegah tab ini ditutup
+        // Tab Beranda
+        Tab homeTab = new Tab("Beranda");
+        homeTab.setContent(loadFXML("Home.fxml"));
 
         // Tab Resep Tersimpan
-        Tab savedRecipesTab = new Tab("Resep Tersimpan");
-        savedRecipesTab.setContent(loadFXML("SavedRecipesPage.fxml"));
-        savedRecipesTab.setClosable(false);  // Mencegah tab ini ditutup
+        Tab savedRecipesTab = new Tab("Resep Saya");
+        savedRecipesTab.setContent(loadFXML("SavedRecipes.fxml"));
 
         // Tab Resep Terjadwal
         Tab scheduledRecipesTab = new Tab("Resep Terjadwal");
-        scheduledRecipesTab.setContent(loadFXML("ScheduledRecipesPage.fxml"));
-        scheduledRecipesTab.setClosable(false);  // Mencegah tab ini ditutup
+        scheduledRecipesTab.setContent(loadFXML("ScheduledRecipes.fxml"));
 
-        // Menambahkan tab ke TabPane
-        tabPane.getTabs().addAll(mainTab, savedRecipesTab, scheduledRecipesTab);
+        // Tambahkan tab ke TabPane
+        tabPane.getTabs().addAll(homeTab, savedRecipesTab, scheduledRecipesTab);
+        tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE); // Tab tidak bisa ditutup
 
-        // Mengatur tampilan utama
-        primaryStage.setScene(new Scene(tabPane, 600, 800)); // Lebar diperluas
+        // Atur scene utama
+        primaryStage.setScene(new Scene(tabPane, 800, 600));
         primaryStage.show();
 
-        // Initialize Database
+        // Initialize database
         DatabaseHelper.initializeDatabase();
     }
 
