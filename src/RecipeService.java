@@ -9,7 +9,7 @@ import org.json.JSONObject;
 
 public class RecipeService {
     private static final String API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent";
-    private static final String API_KEY = "AIzaSyCkcdEjSK_BnHumyMRGKWHO9J7iUHHdU6k";
+    private static final String API_KEY = "";
 
     public static List<String> fetchRecipes(String ingredients) {
         List<String> recipes = new ArrayList<>();
