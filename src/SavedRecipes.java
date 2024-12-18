@@ -32,10 +32,15 @@ public class SavedRecipes {
     private void deleteSelectedRecipe() {
         String selectedRecipe = savedRecipeList.getSelectionModel().getSelectedItem();
         if (selectedRecipe != null) {
-            DatabaseHelper.deleteRecipe(selectedRecipe);
-            showAlert("Success", "Resep berhasil dihapus!");
-            loadSavedRecipes();
-            recipeDetails.clear();
+            try {
+                SavedRecipe recipe = new SavedRecipe(selectedRecipe, selectedRecipe);
+                recipe.delete();
+                showAlert("Success", "Resep berhasil dihapus!");
+                loadSavedRecipes();
+                recipeDetails.clear();
+            } catch (Exception e) {
+                showAlert("Error", "Gagal menghapus resep: " + e.getMessage());
+            }
         } else {
             showAlert("Error", "Pilih resep untuk dihapus!");
         }

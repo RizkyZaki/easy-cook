@@ -1,4 +1,3 @@
-
 import javafx.scene.control.Alert.AlertType;
 
 import java.util.List;
@@ -38,10 +37,15 @@ public class ScheduledRecipes {
     private void deleteScheduledRecipe() {
         String selectedRecipe = scheduledRecipeList.getSelectionModel().getSelectedItem();
         if (selectedRecipe != null) {
-            String recipeName = selectedRecipe.split(" \\(Tanggal: ")[0];
-            DatabaseHelper.deleteScheduleRecipe(recipeName); // Perbaiki ini jika perlu
-            showAlert("Success", "Resep berhasil dihapus dari jadwal!");
-            loadScheduledRecipes(); // Pastikan UI diperbarui
+            try {
+                String recipeName = selectedRecipe.split(" \\(Tanggal: ")[0];
+                ScheduledRecipe recipe = new ScheduledRecipe(recipeName, selectedRecipe, "");
+                recipe.delete();
+                showAlert("Success", "Resep berhasil dihapus dari jadwal!");
+                loadScheduledRecipes();
+            } catch (Exception e) {
+                showAlert("Error", "Gagal menghapus resep: " + e.getMessage());
+            }
         } else {
             showAlert("Error", "Pilih resep untuk dihapus!");
         }
