@@ -1,6 +1,11 @@
-import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
 import java.util.List;
+import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
 
 public class ScheduledRecipes {
     @FXML private ListView<String> scheduledRecipeList;
@@ -23,20 +28,55 @@ public class ScheduledRecipes {
     }
 
     @FXML
+    private void refreshScheduledRecipes() {
+        loadScheduledRecipes(); // Memanggil ulang metode loadScheduledRecipes
+    }
+
+    @FXML
     private void deleteScheduledRecipe() {
         String selectedRecipe = scheduledRecipeList.getSelectionModel().getSelectedItem();
         if (selectedRecipe != null) {
-            DatabaseHelper.deleteRecipe(selectedRecipe);
+            String recipeName = selectedRecipe.split(" \\(Tanggal: ")[0];
+            DatabaseHelper.deleteScheduleRecipe(recipeName); // Perbaiki ini jika perlu
             showAlert("Success", "Resep berhasil dihapus dari jadwal!");
-            loadScheduledRecipes();
-            recipeDetails.clear();
+            loadScheduledRecipes(); // Pastikan UI diperbarui
         } else {
             showAlert("Error", "Pilih resep untuk dihapus!");
         }
     }
 
+    @FXML
+    private void editScheduledRecipe() {
+        String selectedRecipe = scheduledRecipeList.getSelectionModel().getSelectedItem();
+        if (selectedRecipe != null) {
+            String recipeName = selectedRecipe.split(" \\(Tanggal: ")[0];
+
+            DatePicker datePicker = new DatePicker();
+            Alert dateAlert = new Alert(AlertType.CONFIRMATION);
+            dateAlert.setTitle("Edit Jadwal Resep");
+            dateAlert.setHeaderText("Pilih tanggal baru untuk jadwal:");
+            dateAlert.getDialogPane().setContent(datePicker);
+
+            dateAlert.showAndWait().ifPresent(response -> {
+                if (response == ButtonType.OK) {
+                    if (datePicker.getValue() != null) {
+                        String newDate = datePicker.getValue().toString();
+                        DatabaseHelper.updateScheduledRecipe(recipeName, newDate);
+                        showAlert("Success", "Jadwal resep berhasil diperbarui!");
+                        loadScheduledRecipes();
+                        recipeDetails.clear();
+                    } else {
+                        showAlert("Error", "Tanggal tidak valid!");
+                    }
+                }
+            });
+        } else {
+            showAlert("Error", "Pilih resep untuk diubah jadwalnya!");
+        }
+    }
+
     private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle(title);
         alert.setContentText(message);
         alert.show();

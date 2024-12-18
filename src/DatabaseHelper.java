@@ -41,6 +41,18 @@ public class DatabaseHelper {
         }
     }
 
+    public static void updateScheduledRecipe(String recipe, String newDate) {
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement pstmt = conn.prepareStatement(
+                 "UPDATE scheduled_recipes SET schedule_date = ? WHERE recipe = ?")) {
+            pstmt.setString(1, newDate);
+            pstmt.setString(2, recipe);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void scheduleRecipe(String recipe, String date) {
         try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement pstmt = conn.prepareStatement(
@@ -83,13 +95,21 @@ public class DatabaseHelper {
 
     public static void deleteRecipe(String recipe) {
         try (Connection conn = DriverManager.getConnection(DB_URL);
-             PreparedStatement pstmtSaved = conn.prepareStatement("DELETE FROM saved_recipes WHERE recipe = ?");
-             PreparedStatement pstmtScheduled = conn.prepareStatement("DELETE FROM scheduled_recipes WHERE recipe = ?")) {
+             PreparedStatement pstmtSaved = conn.prepareStatement("DELETE FROM saved_recipes WHERE recipe = ?")) {
              
             // Delete from saved recipes
             pstmtSaved.setString(1, recipe);
             pstmtSaved.executeUpdate();
     
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public static void deleteScheduleRecipe(String recipe) {
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement pstmtScheduled = conn.prepareStatement("DELETE FROM scheduled_recipes WHERE recipe = ?")) {
+             
             // Delete from scheduled recipes
             pstmtScheduled.setString(1, recipe);
             pstmtScheduled.executeUpdate();

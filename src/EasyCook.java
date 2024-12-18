@@ -38,7 +38,7 @@ public class EasyCook extends Application {
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE); // Tab tidak bisa ditutup
 
         // Atur scene utama
-        primaryStage.setScene(new Scene(tabPane, 800, 600));
+        primaryStage.setScene(new Scene(tabPane));
         primaryStage.show();
 
         // Initialize database

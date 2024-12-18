@@ -23,6 +23,11 @@ public class SavedRecipes {
     }
 
     @FXML
+    private void refreshSavedRecipes() {
+        loadSavedRecipes(); // Memanggil ulang metode loadSavedRecipes
+    }
+
+    @FXML
     private void deleteSelectedRecipe() {
         String selectedRecipe = savedRecipeList.getSelectionModel().getSelectedItem();
         if (selectedRecipe != null) {
